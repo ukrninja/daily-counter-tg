@@ -1,85 +1,120 @@
+/* Сброс и корректировка размеров */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 /* Базовые настройки */
 body {
     background: linear-gradient(135deg, #1C1C1E, #2C2C2E);
     color: #FFFFFF;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
+    transition: background 0.3s ease;
 }
 
 /* Главный контейнер */
 #app {
     background-color: rgba(28, 28, 30, 0.95);
-    margin-top: 60px;
-    padding: 25px 30px;
-    border-radius: 25px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    margin: 60px auto 0 auto; /* центрирование */
+    padding: 25px 20px;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     max-width: 400px;
     width: 90%;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    text-align: center; /* все элементы по центру */
 }
 
 /* Заголовок */
 h1 {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 600;
-    text-align: center;
     margin-bottom: 25px;
     color: #F2F2F7;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* Поля ввода */
 input {
     width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border-radius: 15px;
+    padding: 14px 18px;
+    margin: 12px auto; /* центрирование и равные отступы */
+    border-radius: 20px;
     border: none;
     background-color: #3A3A3C;
     color: #F2F2F7;
     font-size: 16px;
     outline: none;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
+    display: block;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.5), 0 0 8px #0A84FF;
 }
 
 /* Кнопка */
 button {
     width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 20px;
+    padding: 14px;
+    margin: 18px auto 0 auto;
+    border-radius: 25px;
     border: none;
     background-color: #0A84FF;
     color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    display: block;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background-color: #0066CC;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
 button:active {
     transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* Счётчик дней */
 #counter {
-    font-size: 60px;
-    text-align: center;
-    margin-top: 25px;
+    font-size: 64px;
+    margin-top: 30px;
     color: #FFD60A;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-/* Анимация появления */
+/* Плавное появление */
 #counter, input, button {
-    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Плейсхолдер в стиле Apple */
+input::placeholder {
+    color: #C7C7CC;
+    font-weight: 400;
 }
