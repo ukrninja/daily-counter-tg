@@ -118,3 +118,55 @@ input::placeholder {
     color: #C7C7CC;
     font-weight: 400;
 }
+
+/* Контейнер задач */
+#tasksContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Баблы задач */
+.taskBubble {
+    background-color: #2C2C2E;
+    border-radius: 20px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+/* Название задачи */
+.taskTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #F2F2F7;
+}
+
+/* Счётчик внутри задачи */
+.taskCounter {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFD60A;
+    margin-right: 10px;
+}
+
+/* Кнопка удалить */
+.deleteBtn {
+    background: none;
+    border: none;
+    color: #FF3B30;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.deleteBtn:hover {
+    background-color: rgba(255,59,48,0.2);
+}
+
