@@ -42,7 +42,7 @@ h1 {
 
 /* Поля ввода */
 input {
-    width: 100%;
+    width: 92%;
     padding: 14px 18px;
     margin: 12px auto; /* центрирование и равные отступы */
     border-radius: 20px;
