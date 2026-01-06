@@ -1,61 +1,64 @@
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+// Основная логика счётчика
+const eventInput = document.getElementById("event");
+const dateInput = document.getElementById("date");
+const addBtn = document.getElementById("addBtn");
+const counterDisplay = document.getElementById("counter");
 
-const app = document.getElementById("app");
-const STORAGE_KEY = "daily_counter";
-
-function getSavedCounter() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY));
+// Функция для расчёта дней
+function calculateDays(dateStr) {
+    const eventDate = new Date(dateStr);
+    const today = new Date();
+    const diffTime = today - eventDate;
+    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 }
 
-function saveCounter(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function daysBetween(startDate) {
-  const start = new Date(startDate);
-  const today = new Date();
-  const diff = today - start;
-  return Math.floor(diff / 86400000);
-}
-
-function renderForm() {
-  app.innerHTML = `
-    <h2>Create your counter</h2>
-    <input id="title" placeholder="Event name" />
-    <input id="date" type="date" />
-    <button id="start">Start counting</button>
-  `;
-
-  document.getElementById("start").onclick = () => {
-    const title = document.getElementById("title").value.trim();
-    const date = document.getElementById("date").value;
-
-    if (!title || !date) return;
-
-    saveCounter({ title, startDate: date });
-    renderCounter();
-  };
-}
-
+// Рендерим счётчик
 function renderCounter() {
-  const data = getSavedCounter();
-  if (!data) return renderForm();
+    const storedDate = localStorage.getItem("daily_counter_date");
+    const storedEvent = localStorage.getItem("daily_counter_event");
 
-  const days = daysBetween(data.startDate);
-
-  app.innerHTML = `
-    <h2>${data.title}</h2>
-    <div class="counter">${days}</div>
-    <div>days</div>
-    <button id="reset">Reset counter</button>
-  `;
-
-  document.getElementById("reset").onclick = () => {
-    localStorage.removeItem(STORAGE_KEY);
-    renderForm();
-  };
+    if (storedDate && storedEvent) {
+        const days = calculateDays(storedDate);
+        counterDisplay.textContent = days;
+        eventInput.value = storedEvent;
+        dateInput.value = storedDate;
+    } else {
+        counterDisplay.textContent = 0;
+    }
 }
 
+// Добавляем / сбрасываем событие
+addBtn.addEventListener("click", () => {
+    const eventName = eventInput.value;
+    const eventDate = dateInput.value;
+
+    if (!eventName || !eventDate) {
+        alert("Please enter event and date");
+        return;
+    }
+
+    localStorage.setItem("daily_counter_event", eventName);
+    localStorage.setItem("daily_counter_date", eventDate);
+    renderCounter();
+});
+
+// Инициализация при загрузке
 renderCounter();
+
+// Telegram Mini App интеграция
+if (window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+
+    tg.MainButton.text = "Reset Counter";
+    tg.MainButton.color = "#FF3B30"; // красная кнопка Apple style
+    tg.MainButton.show();
+
+    tg.MainButton.onClick(() => {
+        localStorage.removeItem("daily_counter_date");
+        localStorage.removeItem("daily_counter_event");
+        renderCounter();
+        tg.MainButton.hide(); // скрываем кнопку после сброса
+    });
+}
